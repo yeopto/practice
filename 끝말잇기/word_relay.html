@@ -14,56 +14,44 @@
     <button>입력</button>
     <script>
       const number = parseInt(prompt("몇 명이 참가하나요?"), 10);
-      var confirmOut = number + "명 맞나요?";
-      const yesOrNo = confirm(confirmOut);
-      const $button = document.querySelector("button");
-      const $input = document.querySelector("input");
-      const $word = document.querySelector("#word");
-      const $order = document.querySelector("#order");
 
-      let word; // 제시어
-      let newWord; // 새로 입력한 단어
+      if (number) {
+        var confirmOut = number + "명 맞나요?";
+        const yesOrNo = confirm(confirmOut);
+        const $button = document.querySelector("button");
+        const $input = document.querySelector("input");
+        const $word = document.querySelector("#word");
+        const $order = document.querySelector("#order");
 
-      const onClickButton = () => {
-        if (!word) {
-          //제시어가 비었는가?
-          word = newWord; //비었으면 입력한 단어가 제시어가 된다.
-          $word.textContent = word; //제시어를 화면에 보여주기
-          $input.value = ""; //입력값 공백 만들기
-					$input.focus();
-          const order = parseInt($order.textContent); //현재순서
-          if (order === number) {
-            $order.textContent = 1;
-          } else {
-            $order.textContent = order + 1;
-          }
-        } else {
-          // 비어 있지 않다.
-          if (word[word.length - 1] === newWord[0]) {
-            // 올바른가
-            word = newWord;
-            $word.textContent = word;
-            $input.value = "";
-						$input.focus();
-            const order = parseInt($order.textContent);
+        let word; // 제시어
+        let newWord; // 새로 입력한 단어
+
+        const onClickButton = () => {
+          if ((!word || word[word.length - 1] === newWord[0]) && newWord.length === 3) {
+            //제시어가 비었거나 올바른 단어인가? 그 결과가 세글자인가?
+            word = newWord; //비었으면 입력한 단어가 제시어가 된다.
+            $word.textContent = word; //제시어를 화면에 보여주기
+            const order = parseInt($order.textContent); //현재순서
             if (order === number) {
               $order.textContent = 1;
             } else {
               $order.textContent = order + 1;
             }
           } else {
-            alert("틀렸습니다!");
-						$input.value = "";
-						$input.focus();
+              alert("틀렸거나 세글자가 아닙니다!");
+            }
+            $input.value = ""; //입력값 공백 만들기
+            $input.focus(); //커서 깜박이기
           }
+        const onInput = (event) => { 
+          newWord = event.target.value;
         }
-      };
-      const onInput = (event) => { 
-        newWord = event.target.value;
-      };
 
-      $button.addEventListener("click", onClickButton);
-      $input.addEventListener("input", onInput);
+        $button.addEventListener("click", onClickButton);
+        $input.addEventListener("input", onInput);
+    } else {
+      alert("게임을 실행할 수 없습니다!");
+    };
     </script>
   </body>
 </html>
