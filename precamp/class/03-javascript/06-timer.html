@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>돔(DOM) 조작하기</title>
+    <script>
+        let isStarted = false;
+        const refresh = () => {
+            if (isStarted === false){
+                    isStarted = true;
+                    const token = String(Math.floor(Math.random() * 1000000)).padStart(6,"0");
+                    document.getElementById("auth").innerText = token;
+
+                    let time = 10;
+                    setInterval(function () {
+                        if (time >= 0) {
+                            let min = String(Math.floor(time / 60)).padStart(2, "0");
+                            let sec = String(time % 60).padStart(2, "0");
+                            document.getElementById("start").innerText = `${min + ":" + sec}`;
+                            time--;
+                        }
+                        else {
+                            document.getElementById("clear").disabled = true;
+                            isStarted = false;
+                        }
+                    }, 1000);
+                } else {
+                    alert('너 이미 실행했어')
+                }
+            }
+    </script>
+</head>
+<body>
+    <h3 id="auth">000000</h3><button onclick="refresh()">인증번호전송</button>
+    <h3 id="start">03:00</h3><button id="clear">인증완료</button>
+</body>
+</html>
