@@ -8,9 +8,10 @@
 5. user에서 프로퍼티 name을 삭제하세요.
 */
 
-const user = {
-    name: "John",
-    surname: "Smith",
-};
+let user = new Object();
+user.name = "john";
+user.surname = "Smith";
 user.name = "Pete";
 delete user.name;
+
+console.log(user);
